@@ -1,15 +1,33 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Exam Results</title>
 </head>
 <body>
-  <h1>Exam Results</h1>
-  Exam No: <input id="examNo" type="text">
-  DOB: <input id="dob" type="date">
+  <h1>Check Exam Result</h1>
+  Exam No: <input id="examNo" type="text"><br><br>
+  DOB: <input id="dob" type="date"><br><br>
   <button onclick="checkResult()">Check</button>
   <div id="result"></div>
-  <script src="script.js"></script>
-</body>
-</html>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.checkResult = function() {
+        const examNo = document.getElementById('examNo').value.trim();
+        const dob = document.getElementById('dob').value; // yyyy-mm-dd
+
+        fetch('students.csv')
+          .then(response => response.text())
+          .then(data => {
+            const rows = data.split('\n');
+            for (let i = 1; i < rows.length; i++) {
+              const row = rows[i].split(',');
+              const csvDob = row[1].trim(); // dd/mm/yyyy
+              if (row[0].trim() === examNo && formatDob(csvDob) === dob) {
+                document.getElementById('result').innerHTML = `
+                  Name: ${row[
+
 
