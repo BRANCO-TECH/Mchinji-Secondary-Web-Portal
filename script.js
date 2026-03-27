@@ -1,7 +1,7 @@
 
 function checkResult() {
   const examNo = document.getElementById('examNo').value.trim();
-  const dob = document.getElementById('dob').value.trim();
+  const dob = document.getElementById('dob').value;
 
   fetch('students.csv')
     .then(response => response.text())
@@ -9,7 +9,8 @@ function checkResult() {
       const rows = data.split('\n');
       for (let i = 1; i < rows.length; i++) {
         const row = rows[i].split(',');
-        if (row[0] === examNo && row[1] === dob) {
+        const csvDob = row[1].trim();
+        if (row[0].trim() === examNo && formatDob(csvDob) === dob) {
           document.getElementById('result').innerHTML = `
             Name: ${row[2]}<br>
             BIO: ${row[3]}<br>
