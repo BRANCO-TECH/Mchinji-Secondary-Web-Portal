@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <body>
@@ -13,7 +15,7 @@
       const form = document.getElementById('form').value;
       const examNo = document.getElementById('examNo').value.trim();
       const dob = document.getElementById('dob').value;
-      const csvFile = 'results.csv';
+      const csvFile = `form${form}.csv`;
 
       fetch(csvFile)
         .then(r => r.text())
@@ -21,14 +23,17 @@
           const rows = data.split('\n');
           for (let row of rows) {
             const cols = row.split(',');
-            // Assuming columns: exam_no(0), dob(1), name(2), ...
+            // cols[0]=ExamNo, cols[1]=DOB, cols[2]=Name, ...
             if (cols[0].trim() === examNo && cols[1].trim() === dob.split('-').reverse().join('/')) {
               let html = `<h3>${cols[2]}</h3>`;
-              html += `Form: ${form}<br>`;
-              // Add more columns as needed (e.g., grades, subjects)
-              html += `Bio: ${cols[3]}<br>`;
-              html += `Phy: ${cols[4]}<br>`;
-              html += `Chem: ${cols[5]}<br>`;
+              html += `Form: ${form}<br><br>`;
+              html += `<table border="1">`;
+              // Loop through columns A–BF (0–57)
+              for (let i = 0; i <= 57; i++) {
+                const colName = String.fromCharCode(65 + i); // A, B, C...
+                html += `<tr><th>${colName}</th><td>${cols[i] || ''}</td></tr>`;
+              }
+              html += `</table>`;
               document.getElementById('result').innerHTML = html;
               return;
             }
@@ -39,5 +44,4 @@
   </script>
 </body>
 </html>
-
 
