@@ -4,7 +4,7 @@
 <html>
 <body>
   <h1>Check Exam Result</h1>
-  Form: <select id="form"><option value="1">Form 1</option><option value="2">Form 2</option><option value="3">Form 3</option><option value="4">Form 4</option></select><br><br>
+  Form: <select id="form"><option value="1">Form 1</option></select><br><br>
   Exam No: <input id="examNo" type="text"><br><br>
   DOB: <input id="dob" type="date"><br><br>
   <button onclick="checkResult()">Check</button>
@@ -14,7 +14,7 @@
     function checkResult() {
       const form = document.getElementById('form').value;
       const examNo = document.getElementById('examNo').value.trim();
-      const dob = document.getElementById('dob').value;
+      const dob = document.getElementById('dob').value.split('-').reverse().join('/'); // convert to dd/mm/yyyy
       const csvFile = `form${form}.csv`;
 
       fetch(csvFile)
@@ -23,13 +23,11 @@
           const rows = data.split('\n');
           for (let row of rows) {
             const cols = row.split(',');
-            // cols[0]=ExamNo, cols[1]=DOB, cols[2]=Name, ...
-            if (cols[0].trim() === examNo && cols[1].trim() === dob.split('-').reverse().join('/')) {
-              let html = `<h3>${cols[2]}</h3>`;
-              html += `Form: ${form}<br><br>`;
+            // cols[0]=FORM, cols[1]=EXAM_NO, cols[2]=DOB, cols[3]=NAME
+            if (cols[1].trim() === examNo && cols[2].trim() === dob) {
+              let html = `<h3>${cols[3]}</h3>`;
               html += `<table border="1">`;
-              // Loop through columns A–BF (0–57)
-              for (let i = 0; i <= 57; i++) {
+              for (let i = 0; i < cols.length; i++) {
                 const colName = String.fromCharCode(65 + i); // A, B, C...
                 html += `<tr><th>${colName}</th><td>${cols[i] || ''}</td></tr>`;
               }
@@ -44,4 +42,5 @@
   </script>
 </body>
 </html>
+
 
