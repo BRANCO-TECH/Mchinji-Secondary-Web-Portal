@@ -26,7 +26,7 @@
           let html = `
             <div style="width: 600px; margin: auto; border: 1px solid black; padding: 10px; font-size: 12px; position: relative;">
               <h2>REPORT CARD</h2>
-              <p><strong>Name:</strong> ${cols[10]}</p>
+              <p><strong>Name:</strong> ${cols[9]}</p>
               <p><strong>Form:</strong> ${cols[0]} <strong>Year:</strong> ${cols[4]}</p>
               <table border="1" width="100%" style="font-size: 12px; table-layout: fixed; word-wrap: break-word;">
                 <tr>
@@ -39,7 +39,7 @@
           `;
           const subjects = ['AGRI', 'BIBLE', 'BIO', 'CHE', 'CHI', 'HFC', 'ENG', 'HIS', 'GEO', 'S/LF', 'MAT', 'PHY', 'COM'];
           subjects.forEach((subject, i) => {
-            const colIndex = 11 + (i * 4); // K, O, S, ... for AGGREGATE
+            const colIndex = 10 + (i * 4); // K, O, S, ... for AGGREGATE
             html += `
               <tr>
                 <td>${subject}</td>
