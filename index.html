@@ -22,15 +22,16 @@
       for (let row of data.slice(2)) { // skip first two header rows
         const cols = row;
         if (cols.length < 58) continue;
-        if (cols[0]?.trim() === examNo && cols[1]?.trim() === dob) { // correct indices for examNo & dob
+        if (cols[0]?.trim() === examNo && cols[1]?.trim() === dob) {
           let html = `
             <div style="width: 600px; margin: auto; border: 1px solid black; padding: 10px;">
               <h2>CANDIDATE INFORMATION</h2>
-              <p><strong>Name:</strong> ${cols[4]}</p> <!-- Name in column E -->
+              <p><strong>Name:</strong> ${cols[4]}</p>
               <p><strong>Form:</strong> 1</p>
               <table border="1" width="100%">
                 <tr>
                   <th>SUBJECT</th>
+                  <th>AGGREGATE (%)</th>
                   <th>GRADE</th>
                   <th>POSITION</th>
                   <th>REMARKS</th>
@@ -41,9 +42,10 @@
             html += `
               <tr>
                 <td>${subject}</td>
-                <td>${cols[5 + i]}</td> <!-- GRADE (F3 onward) -->
-                <td>${cols[18 + i]}</td> <!-- POSITION -->
-                <td>${cols[31 + i]}</td> <!-- REMARKS -->
+                <td>${cols[5 + i]}</td> <!-- AGGREGATE (%) -->
+                <td>${cols[18 + i]}</td> <!-- GRADE -->
+                <td>${cols[31 + i]}</td> <!-- POSITION -->
+                <td>${cols[44 + i]}</td> <!-- REMARKS -->
               </tr>
             `;
           });
