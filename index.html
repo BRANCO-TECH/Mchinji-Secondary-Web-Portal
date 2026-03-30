@@ -70,7 +70,12 @@
           y += 10;
           doc.text(`Next Term Opens: ${cols[nextTermIndex]}`, 10, y);
 
-          doc.save("report-card.pdf");
+          const blob = doc.output('blob');
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = 'report-card.pdf';
+          link.click();
+
           found = true;
           return;
         }
@@ -89,6 +94,9 @@
   </script>
 </body>
 </html>
+
+
+
 
 
 
