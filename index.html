@@ -1,12 +1,12 @@
-
 <!DOCTYPE html>
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @media (max-width: 600px) {
-      table { font-size: 12px; }
-      h2 { font-size: 18px; }
+      body { font-size: 12px; }
+      h2 { font-size: 16px; }
+      table { font-size: 11px; }
     }
   </style>
 </head>
@@ -56,17 +56,15 @@
           const remarksIndex = 63;
           const subjects = ['AGRI', 'BIBLE', 'BIO', 'CHE', 'CHI', 'HFC', 'ENG', 'HIS', 'GEO', 'S/LF', 'MAT', 'PHY', 'COM'];
           let html = `
-            <div style="max-width: 800px; width: 100%; margin: auto; border: 1px solid black; padding: 20px; font-size: 14px;">
+            <div style="max-width: 800px; width: 100%; margin: auto; border: 1px solid black; padding: 10px; font-size: 14px;">
               <div style="text-align: center;">
                 <h2>REPORT CARD</h2>
                 <p>MCHINJI SECONDARY SCHOOL</p>
               </div>
               <p><strong>Name:</strong> ${cols[nameIndex]}</p>
               <p><strong>Form:</strong> ${cols[formIndex]} <strong>Term:</strong> ${cols[termIndex]} <strong>Year:</strong> ${cols[yearIndex]}</p>
-              <div style="position: absolute; top: 60px; right: 20px; text-align: right;">
-                <p><strong>POSITION IN CLASS:</strong> ${cols[positionIndex]}</p>
-                <p><strong>REMARKS:</strong> ${cols[remarksIndex]}</p>
-              </div>
+              <p><strong>POSITION IN CLASS:</strong> ${cols[positionIndex]}</p>
+              <p><strong>REMARKS:</strong> ${cols[remarksIndex]}</p>
               <div style="overflow-x: auto;">
                 <table border="1" width="100%" style="font-size: 14px; table-layout: auto;">
                   <tr>
@@ -91,6 +89,8 @@
                 </table>
               </div>
               <p><strong>HEADTEACHER:</strong> ${cols[headTeacherIndex]}</p>
+              <p><strong>BANK DETAILS:</strong> ${cols[bankDetailsIndex]}</p>
+              <p><strong>NEXT TERM:</strong> ${cols[nextTermIndex]}</p>
             </div>
           `;
           document.getElementById('result').innerHTML = html;
@@ -110,4 +110,5 @@
   </script>
 </body>
 </html>
+
 
