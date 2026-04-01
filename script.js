@@ -1,4 +1,5 @@
 
+
 let currentFormType = '';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -121,4 +122,3 @@ function checkResult() {
   const password = document.getElementById('password').value.trim();
   fillReportCard(form, examNo, password);
 }
-
