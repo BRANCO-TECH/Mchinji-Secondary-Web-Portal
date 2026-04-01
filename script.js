@@ -1,6 +1,10 @@
 
 let currentFormType = '';
 
+document.getElementById('daySchoolBtn').addEventListener('click', showDaySchoolOptions);
+document.getElementById('odlBtn').addEventListener('click', showODLOptions);
+document.getElementById('checkResultBtn').addEventListener('click', checkResult);
+
 function showDaySchoolOptions() {
   currentFormType = 'Day';
   const options = ['Form1', 'Form2', 'Form3', 'Form4'];
@@ -109,3 +113,4 @@ function checkResult() {
   const password = document.getElementById('password').value.trim();
   fillReportCard(form, examNo, password);
 }
+
