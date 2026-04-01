@@ -1,4 +1,30 @@
 
+let currentFormType = '';
+
+function showDaySchoolOptions() {
+  currentFormType = 'Day';
+  const options = ['Form1', 'Form2', 'Form3', 'Form4'];
+  populateOptions(options);
+}
+
+function showODLOptions() {
+  currentFormType = 'ODL';
+  const options = ['Form1ODL', 'Form2ODL', 'Form3ODL', 'Form4ODL'];
+  populateOptions(options);
+}
+
+function populateOptions(options) {
+  document.getElementById('options').style.display = 'block';
+  const select = document.getElementById('form');
+  select.innerHTML = '';
+  options.forEach(option => {
+    const opt = document.createElement('option');
+    opt.value = option;
+    opt.text = option.replace('ODL', ' ODL');
+    select.add(opt);
+  });
+}
+
 async function loadCSV(url) {
   try {
     const response = await fetch(url);
@@ -13,7 +39,7 @@ async function loadCSV(url) {
 }
 
 async function fillReportCard(form, examNo, password) {
-  const csvUrl = `form${form}.csv`;
+  const csvUrl = `${form}.csv`;
   const data = await loadCSV(csvUrl);
   let found = false;
   for (let row of data.slice(2)) {
@@ -30,11 +56,12 @@ async function fillReportCard(form, examNo, password) {
       const positionIndex = 62;
       const remarksIndex = 63;
       const subjects = ['AGRI', 'BIBLE', 'BIO', 'CHE', 'CHI', 'HFC', 'ENG', 'HIS', 'GEO', 'S/LF', 'MAT', 'PHY', 'COM'];
+      const schoolName = form.includes('ODL') ? 'MCHINJI SECONDARY SCHOOL ODL' : 'MCHINJI SECONDARY SCHOOL';
       let html = `
         <div class="card">
           <div style="text-align: center;">
             <h2>REPORT CARD</h2>
-            <p>MCHINJI SECONDARY SCHOOL</p>
+            <p>${schoolName}</p>
           </div>
           <p><strong>Name:</strong> ${cols[nameIndex]}</p>
           <p><strong>Form:</strong> ${cols[formIndex]} <strong>Term:</strong> ${cols[termIndex]} <strong>Year:</strong> ${cols[yearIndex]}</p>
