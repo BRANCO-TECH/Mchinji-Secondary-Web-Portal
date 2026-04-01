@@ -1,9 +1,17 @@
 
 let currentFormType = '';
 
-document.getElementById('daySchoolBtn').addEventListener('click', showDaySchoolOptions);
-document.getElementById('odlBtn').addEventListener('click', showODLOptions);
-document.getElementById('checkResultBtn').addEventListener('click', checkResult);
+document.addEventListener('DOMContentLoaded', () => {
+  const daySchoolBtn = document.getElementById('daySchoolBtn');
+  const odlBtn = document.getElementById('odlBtn');
+  const checkResultBtn = document.getElementById('checkResultBtn');
+
+  if (daySchoolBtn && odlBtn && checkResultBtn) {
+    daySchoolBtn.addEventListener('click', showDaySchoolOptions);
+    odlBtn.addEventListener('click', showODLOptions);
+    checkResultBtn.addEventListener('click', checkResult);
+  }
+});
 
 function showDaySchoolOptions() {
   currentFormType = 'Day';
