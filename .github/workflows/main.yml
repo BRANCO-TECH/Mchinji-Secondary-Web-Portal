@@ -16,9 +16,9 @@ jobs:
         uses: cpina/github-action-push-to-another-repository@v1
         with:
           source-directory: ./build # adjust if needed
-          destination-git-username: your-username
-          destination-git-email: your-email
-          destination-repository-name: your-username/Mchinji-Web-Portal
+          destination-git-username: BRANCO-TECH
+          destination-git-email: mwaleb075@gmail.com
+          destination-repository-name: BRANCO-TECH/Mchinji-Secondary-Web-Portal
           destination-branch: main
           target-directory: .
           github-token: ${{ secrets.GITHUB_TOKEN }}
