@@ -26,7 +26,14 @@ th, td {
   font-size: 10px;
   word-wrap: break-word;
 }
-#options{
-  margin-top: 15px;
+.green-btn{
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.green-btn:hover {background-color: #3e8e41;
 }
 
