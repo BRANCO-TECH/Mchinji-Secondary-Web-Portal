@@ -1,30 +1,17 @@
 
-name: Push to public repo
-
+name: Sync to Public Repo
 on:
   push:
-    branches:
-      - main
-
+    branches: [main]  # Trigger on pushes to main
 jobs:
-  deploy:
+  push-to-public:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-
-      - name: Build project
-        run: |
-          # Add your build commands here (e.g., npm run build)
-      - name: Push to public repo
-        uses: cpina/github-action-push-to-another-repository@v1.2
+      - name: Checkout Private Repo
+        uses: actions/checkout@v4
         with:
-          source-directory: 'build'
-          destination-github-username: 'BRANCO-TECH'
-          user-email: 'mwaleb075@gmail.com'
-          destination-repository-username: 'BRANCO-TECH/Mchinji-Secondary-Web-Portal'
-          target-branch: 'main'
-          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-          commit-message: 'Deploy buil to public repo'
-
-
-
+          fetch-depth: 0
+      - name: Push to Public
+        run: |
+          git remote add public https://${{ secrets.SYNC_PAT }}:@github.com/BRANCO-TECH/Mchinji-Secondary-Web-Portal.git
+          git push public main --force
