@@ -26,5 +26,7 @@ th, td {
   font-size: 10px;
   word-wrap: break-word;
 }
-
+#options{
+  margin-top: 15px;
+}
 
