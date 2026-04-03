@@ -21,9 +21,9 @@ jobs:
           source-dir: 'build'
           destination-git-username: 'BRANCO-TECH'
           destination-git-email: 'mwaleb075@gmail.com'
-          destination-repo: 'BRANCO-TECH/Mchinji-Secondary-Web-Portal'
+          destination-repository-name: 'BRANCO-TECH/Mchinji-Secondary-Web-Portal'
           destination-branch: 'main'
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-          commit-message: Deploy buil to public repo
+          commit-message: 'Deploy buil to public repo'
 
 
