@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build project
         run: |
@@ -23,7 +23,7 @@ jobs:
           destination-git-email: 'mwaleb075@gmail.com'
           destination-repo: 'BRANCO-TECH/Mchinji-Secondary-Web-Portal'
           destination-branch: 'main'
-          ssh_key: ${{ secrets.SSH_DEPLOY_KEY }}
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
           commit-message: Deploy buil to public repo
 
 
