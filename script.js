@@ -120,7 +120,7 @@ async function fillReportCard(form, examNo, password) {
               <p style="margin: 2px 0;"><strong>POSITION IN CLASS:</strong> ${cols[positionIndex] || '-'}</p>
               <!-- ADDED: The dynamic Aggregate Grade/Points element -->
               <p style="margin: 2px 0;"><strong>${aggregateLabel}:</strong> ${cols[bmIndex] || '-'}</p>
-              <p style="margin: 2px 0;"><strong>REMARKS:</strong> ${cols[remarksIndex] || '-'}</p>
+              <p style="margin: 2px 0;"><strong>OVERALL REMARKS:</strong> ${cols[remarksIndex] || '-'}</p>
             </div>
           </div>
 
