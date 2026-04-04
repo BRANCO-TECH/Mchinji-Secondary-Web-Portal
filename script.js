@@ -105,8 +105,8 @@ async function fillReportCard(form, examNo, password) {
             <p style="margin: 2px 0; font-size: 13px;"><strong>${schoolName}</strong></p>
           </div>
           
-          <!-- Top section with full names -->
-          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; text-align: left; font-size: 11px;">
+          <!-- Increased font-size to 12px -->
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; text-align: left; font-size: 12px;">
             <div style="flex: 1; padding-right: 5px;">
               <p style="margin: 1px 0;"><strong>Name:</strong> ${cols[nameIndex] || '-'}</p>
               <p style="margin: 1px 0;"><strong>Form:</strong> ${cols[formIndex]} <strong>Term:</strong> ${cols[termIndex]} <strong>Year:</strong> ${cols[yearIndex]}</p>
@@ -118,9 +118,9 @@ async function fillReportCard(form, examNo, password) {
             </div>
           </div>
 
-          <!-- Table with full names but tiny font -->
+          <!-- Increased table font-size to 11px -->
           <div style="overflow-x: hidden; width: 100%;">
-            <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10px;">
+            <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11px;">
               <tr>
                 <th style="padding: 4px 2px;">SUBJECT</th>
                 <th style="padding: 4px 2px;">AGGREGATE (%)</th>
@@ -142,7 +142,9 @@ async function fillReportCard(form, examNo, password) {
               }).join('')}
             </table>
           </div>
-          <div style="text-align: left; font-size: 11px; margin-top: 10px;">
+          
+          <!-- Increased bottom font-size to 12px -->
+          <div style="text-align: left; font-size: 12px; margin-top: 10px;">
             <p style="margin: 2px 0;"><strong>HEADTEACHER:</strong> ${cols[headTeacherIndex] || '-'}</p>
             <p style="margin: 2px 0;"><strong>BANK DETAILS:</strong> ${cols[bankDetailsIndex] || '-'}</p>
             <p style="margin: 2px 0;"><strong>NEXT TERM OPENS:</strong> ${cols[nextTermIndex] || '-'}</p>
