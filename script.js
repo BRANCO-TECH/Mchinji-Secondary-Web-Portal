@@ -45,8 +45,23 @@ async function loadCSV(url) {
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Failed to load ${url}`);
-    const text = await response.text();
-    return text.split('\n').map(row => row.split(','));
+    let text = await response.text();
+    
+    // Fix: Remove Windows carriage returns to prevent blank cells on PC
+    text = text.replace(/\r/g, ''); 
+    
+    const rows = text.split('\n');
+    const data = [];
+    
+    for (let row of rows) {
+      const cols = row.split(',');
+      // Skip completely empty ghost rows
+      if (cols.length > 1 && cols.some(col => col.trim() !== '')) {
+        data.push(cols);
+      }
+    }
+    
+    return data;
   } catch (e) {
     console.error(e);
     document.getElementById('result').innerHTML = `<div class="card">Error loading data: ${e.message}</div>`;
@@ -84,10 +99,19 @@ async function fillReportCard(form, examNo, password) {
             <h2>REPORT CARD</h2>
             <p><strong>${schoolName}</strong></p>
           </div>
-          <p><strong>Name:</strong> ${cols[nameIndex]}</p>
-          <p><strong>Form:</strong> ${cols[formIndex]} &nbsp; <strong>Term:</strong> ${cols[termIndex]} &nbsp; <strong>Year:</strong> ${cols[yearIndex]}</p>
-          <p><strong>POSITION IN CLASS:</strong> ${cols[positionIndex]}</p>
-          <p><strong>REMARKS:</strong> ${cols[remarksIndex]}</p>
+          
+          <!-- NEW LAYOUT: Flexbox for Top Left and Top Right -->
+          <div style="display: flex; justify-content: space-between; margin-top: 15px; margin-bottom: 15px; text-align: left; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+              <p style="margin: 2px 0;"><strong>Name:</strong> ${cols[nameIndex] || '-'}</p>
+              <p style="margin: 2px 0;"><strong>Form:</strong> ${cols[formIndex]} &nbsp; <strong>Term:</strong> ${cols[termIndex]} &nbsp; <strong>Year:</strong> ${cols[yearIndex]}</p>
+            </div>
+            <div style="flex: 1; min-width: 200px; text-align: right;">
+              <p style="margin: 2px 0;"><strong>POSITION IN CLASS:</strong> ${cols[positionIndex] || '-'}</p>
+              <p style="margin: 2px 0;"><strong>REMARKS:</strong> ${cols[remarksIndex] || '-'}</p>
+            </div>
+          </div>
+
           <div style="overflow-x: auto;">
             <table border="1">
               <tr>
@@ -102,19 +126,21 @@ async function fillReportCard(form, examNo, password) {
                 return `
                   <tr>
                     <td>${subject}</td>
-                    <td>${cols[baseIndex]}</td>
-                    <td>${cols[baseIndex + 1]}</td>
-                    <td>${cols[baseIndex + 2]}</td>
-                    <td>${cols[baseIndex + 3]}</td>
+                    <td>${cols[baseIndex] || '-'}</td>
+                    <td>${cols[baseIndex + 1] || '-'}</td>
+                    <td>${cols[baseIndex + 2] || '-'}</td>
+                    <td>${cols[baseIndex + 3] || '-'}</td>
                   </tr>
                 `;
               }).join('')}
             </table>
           </div>
           <br>
-          <p><strong>HEADTEACHER:</strong> ${cols[headTeacherIndex]}</p>
-          <p><strong>BANK DETAILS FOR FEES PAYMENT:</strong> ${cols[bankDetailsIndex]}</p>
-          <p><strong>NEXT TERM OPENS ON:</strong> ${cols[nextTermIndex]}</p>
+          <div style="text-align: left;">
+            <p><strong>HEADTEACHER:</strong> ${cols[headTeacherIndex] || '-'}</p>
+            <p><strong>BANK DETAILS FOR FEES PAYMENT:</strong> ${cols[bankDetailsIndex] || '-'}</p>
+            <p><strong>NEXT TERM OPENS ON:</strong> ${cols[nextTermIndex] || '-'}</p>
+          </div>
         </div>
         <button id="downloadBtn" class="green-btn" style="margin-top: 15px;">Download Report Card</button>
       `;
