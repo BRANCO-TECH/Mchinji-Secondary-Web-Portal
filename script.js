@@ -55,7 +55,6 @@ async function loadCSV(url) {
     
     for (let row of rows) {
       const cols = row.split(',');
-      // Skip completely empty ghost rows
       if (cols.length > 1 && cols.some(col => col.trim() !== '')) {
         data.push(cols);
       }
@@ -94,13 +93,15 @@ async function fillReportCard(form, examNo, password) {
       
       let html = `
         <h2>Your examination results</h2>
-        <div class="report-card-inner">
+        
+        <!-- ADDED BORDER AND PADDING HERE -->
+        <div class="report-card-inner" style="border: 1px solid #000; padding: 15px; margin-bottom: 10px;">
           <div style="text-align: center;">
-            <h2>REPORT CARD</h2>
+            <h2 style="margin-top: 0;">REPORT CARD</h2>
             <p><strong>${schoolName}</strong></p>
           </div>
           
-          <!-- NEW LAYOUT: Flexbox for Top Left and Top Right -->
+          <!-- Flexbox for Top Left and Top Right -->
           <div style="display: flex; justify-content: space-between; margin-top: 15px; margin-bottom: 15px; text-align: left; flex-wrap: wrap;">
             <div style="flex: 1; min-width: 200px;">
               <p style="margin: 2px 0;"><strong>Name:</strong> ${cols[nameIndex] || '-'}</p>
@@ -137,11 +138,12 @@ async function fillReportCard(form, examNo, password) {
           </div>
           <br>
           <div style="text-align: left;">
-            <p><strong>HEADTEACHER:</strong> ${cols[headTeacherIndex] || '-'}</p>
-            <p><strong>BANK DETAILS FOR FEES PAYMENT:</strong> ${cols[bankDetailsIndex] || '-'}</p>
-            <p><strong>NEXT TERM OPENS ON:</strong> ${cols[nextTermIndex] || '-'}</p>
+            <p style="margin: 2px 0;"><strong>HEADTEACHER:</strong> ${cols[headTeacherIndex] || '-'}</p>
+            <p style="margin: 2px 0;"><strong>BANK DETAILS FOR FEES PAYMENT:</strong> ${cols[bankDetailsIndex] || '-'}</p>
+            <p style="margin: 2px 0;"><strong>NEXT TERM OPENS ON:</strong> ${cols[nextTermIndex] || '-'}</p>
           </div>
         </div>
+        
         <button id="downloadBtn" class="green-btn" style="margin-top: 15px;">Download Report Card</button>
       `;
       
