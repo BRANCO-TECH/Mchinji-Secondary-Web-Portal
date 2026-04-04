@@ -88,9 +88,9 @@ async function fillReportCard(form, examNo, password) {
       
       let aggregateLabel = '';
       if (form.includes('Form1') || form.includes('Form2')) {
-        aggregateLabel = 'Aggr. Grade';
+        aggregateLabel = 'Aggregate Grade';
       } else {
-        aggregateLabel = 'Aggr. Points';
+        aggregateLabel = 'Aggregate Points';
       }
       
       const subjects = ['AGRI', 'BIBLE', 'BIO', 'CHE', 'CHI', 'HFC', 'ENG', 'HIS', 'GEO', 'S/LF', 'MAT', 'PHY', 'COM'];
@@ -105,38 +105,38 @@ async function fillReportCard(form, examNo, password) {
             <p style="margin: 2px 0; font-size: 13px;"><strong>${schoolName}</strong></p>
           </div>
           
-          <!-- TIGHTENED FLEXBOX FOR MOBILE -->
-          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; text-align: left; font-size: 12px;">
-            <div style="flex: 1;">
+          <!-- Top section with full names -->
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; text-align: left; font-size: 11px;">
+            <div style="flex: 1; padding-right: 5px;">
               <p style="margin: 1px 0;"><strong>Name:</strong> ${cols[nameIndex] || '-'}</p>
-              <p style="margin: 1px 0;"><strong>Form:</strong> ${cols[formIndex]} <strong>Term:</strong> ${cols[termIndex]} <strong>Yr:</strong> ${cols[yearIndex]}</p>
+              <p style="margin: 1px 0;"><strong>Form:</strong> ${cols[formIndex]} <strong>Term:</strong> ${cols[termIndex]} <strong>Year:</strong> ${cols[yearIndex]}</p>
             </div>
-            <div style="flex: 1; text-align: right;">
-              <p style="margin: 1px 0;"><strong>Pos:</strong> ${cols[positionIndex] || '-'}</p>
+            <div style="flex: 1; text-align: right; padding-left: 5px;">
+              <p style="margin: 1px 0;"><strong>Position In Class:</strong> ${cols[positionIndex] || '-'}</p>
               <p style="margin: 1px 0;"><strong>${aggregateLabel}:</strong> ${cols[bmIndex] || '-'}</p>
               <p style="margin: 1px 0;"><strong>Remarks:</strong> ${cols[remarksIndex] || '-'}</p>
             </div>
           </div>
 
-          <!-- TIGHTENED TABLE FOR MOBILE -->
+          <!-- Table with full names but tiny font -->
           <div style="overflow-x: hidden; width: 100%;">
-            <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11px;">
+            <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10px;">
               <tr>
-                <th style="padding: 4px;">SUBJ</th>
-                <th style="padding: 4px;">AGG (%)</th>
-                <th style="padding: 4px;">GRADE</th>
-                <th style="padding: 4px;">POS</th>
-                <th style="padding: 4px;">REM</th>
+                <th style="padding: 4px 2px;">SUBJECT</th>
+                <th style="padding: 4px 2px;">AGGREGATE (%)</th>
+                <th style="padding: 4px 2px;">GRADE</th>
+                <th style="padding: 4px 2px;">POSITION</th>
+                <th style="padding: 4px 2px;">REMARKS</th>
               </tr>
               ${subjects.map((subject, i) => {
                 const baseIndex = 10 + (i * 4);
                 return `
                   <tr>
-                    <td style="padding: 3px; text-align: left; padding-left: 4px;">${subject}</td>
-                    <td style="padding: 3px;">${cols[baseIndex] || '-'}</td>
-                    <td style="padding: 3px;">${cols[baseIndex + 1] || '-'}</td>
-                    <td style="padding: 3px;">${cols[baseIndex + 2] || '-'}</td>
-                    <td style="padding: 3px;">${cols[baseIndex + 3] || '-'}</td>
+                    <td style="padding: 3px 2px; text-align: left; padding-left: 4px;">${subject}</td>
+                    <td style="padding: 3px 2px;">${cols[baseIndex] || '-'}</td>
+                    <td style="padding: 3px 2px;">${cols[baseIndex + 1] || '-'}</td>
+                    <td style="padding: 3px 2px;">${cols[baseIndex + 2] || '-'}</td>
+                    <td style="padding: 3px 2px;">${cols[baseIndex + 3] || '-'}</td>
                   </tr>
                 `;
               }).join('')}
