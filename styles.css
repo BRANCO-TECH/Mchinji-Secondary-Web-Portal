@@ -7,7 +7,7 @@
   max-width: 800px;
   width: 100%;
   margin: auto;
-  border: 1px solid #ddd;
+  border: 3px solid hsl(113, 100%, 31%);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -42,7 +42,7 @@ th, td {
 }
 .logo{
   align-self: center;
-  width: 150px;
+  width: 100px;
 }
 
 
