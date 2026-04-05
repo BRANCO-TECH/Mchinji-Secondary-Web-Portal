@@ -72,9 +72,7 @@ async function fillReportCard(form, examNo, password) {
   
   for (let row of data.slice(2)) {
     const cols = row;
-    // Updated to 68 to ensure all 13 subjects (starting at 16) fit without errors
-    if (cols.length < 68) continue;
-    
+   
     // CHANGED: Now checks Column A (Index 0) for Exam No AND Column O (Index 14) for Password
     if (cols[0]?.trim() === examNo.trim() && cols[14]?.trim() === password.trim()) {
       const nameIndex = 2; // Column C
