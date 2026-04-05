@@ -72,10 +72,11 @@ async function fillReportCard(form, examNo, password) {
   
   for (let row of data.slice(2)) {
     const cols = row;
-    if (cols.length < 67) continue;
+    // Updated to 68 to ensure all 13 subjects (starting at 16) fit without errors
+    if (cols.length < 68) continue;
     
-    // CHANGED cols[1] TO cols[0] TO MATCH COLUMN A (Exam No)
-    if (cols[0]?.trim() === examNo.trim() && password === "123456") {
+    // CHANGED: Now checks Column A (Index 0) for Exam No AND Column O (Index 14) for Password
+    if (cols[0]?.trim() === examNo.trim() && cols[14]?.trim() === password.trim()) {
       const nameIndex = 2; // Column C
       const formIndex = 3; // Column D
       const termIndex = 4; // Column E
@@ -130,7 +131,8 @@ async function fillReportCard(form, examNo, password) {
                 <th style="padding: 4px 2px;">REMARKS</th>
               </tr>
               ${subjects.map((subject, i) => {
-                const baseIndex = 15 + (i * 4);
+                // CHANGED: Subjects now start looping at Index 16
+                const baseIndex = 16 + (i * 4);
                 return `
                   <tr>
                     <td style="padding: 3px 2px; text-align: left; padding-left: 4px;">${subject}</td>
