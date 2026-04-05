@@ -72,22 +72,23 @@ async function fillReportCard(form, examNo, password) {
   
   for (let row of data.slice(2)) {
     const cols = row;
-    // Updated to < 67 to account for the new Column BO (Index 66)
+    // Ensuring the row has enough columns to cover up to the last subject
     if (cols.length < 67) continue;
     
     if (cols[1]?.trim() === examNo.trim() && password === "123456") {
-      const nameIndex = 9;
-      const formIndex = 0;
-      const termIndex = 3;
-      const yearIndex = 4;
-      const headTeacherIndex = 5;
-      const bankDetailsIndex = 6;
-      const nextTermIndex = 7;
-      const positionIndex = 62;
-      const remarksIndex = 63;
-      const bmIndex = 64; 
-      const uniformIndex = 65; // Column BN
-      const gradingSystemIndex = 66; // Column BO
+      // UPDATED COLUMN MAPPINGS (A=0, B=1, C=2, D=3, etc.)
+      const nameIndex = 2; // Column C
+      const formIndex = 3; // Column D
+      const termIndex = 4; // Column E
+      const yearIndex = 5; // Column F
+      const positionIndex = 6; // Column G
+      const bmIndex = 7; // Column H (Aggregate Grade)
+      const remarksIndex = 8; // Column I
+      const gradingSystemIndex = 9; // Column J
+      const headTeacherIndex = 10; // Column K
+      const uniformIndex = 11; // Column L
+      const bankDetailsIndex = 12; // Column M
+      const nextTermIndex = 13; // Column N
       
       let aggregateLabel = '';
       if (form.includes('Form1') || form.includes('Form2')) {
@@ -108,7 +109,6 @@ async function fillReportCard(form, examNo, password) {
             <p style="margin: 2px 0; font-size: 13px;"><strong>${schoolName}</strong></p>
           </div>
           
-          <!-- Increased font-size to 12px -->
           <div style="display: flex; justify-content: space-between; margin-bottom: 10px; text-align: left; font-size: 12px;">
             <div style="flex: 1; padding-right: 5px;">
               <p style="margin: 1px 0;"><strong>Name:</strong> ${cols[nameIndex] || '-'}</p>
@@ -121,7 +121,6 @@ async function fillReportCard(form, examNo, password) {
             </div>
           </div>
 
-          <!-- Increased table font-size to 11px -->
           <div style="overflow-x: hidden; width: 100%;">
             <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11px;">
               <tr>
@@ -132,7 +131,8 @@ async function fillReportCard(form, examNo, password) {
                 <th style="padding: 4px 2px;">REMARKS</th>
               </tr>
               ${subjects.map((subject, i) => {
-                const baseIndex = 10 + (i * 4);
+                // SUBJECTS START AT INDEX 15 AS REQUESTED
+                const baseIndex = 15 + (i * 4);
                 return `
                   <tr>
                     <td style="padding: 3px 2px; text-align: left; padding-left: 4px;">${subject}</td>
@@ -146,7 +146,6 @@ async function fillReportCard(form, examNo, password) {
             </table>
           </div>
           
-          <!-- Increased bottom font-size to 12px -->
           <div style="text-align: left; font-size: 12px; margin-top: 10px;">
             <p style="margin: 2px 0;"><strong>UNIFORM:</strong> ${cols[uniformIndex] || '-'}</p>
             <p style="margin: 2px 0;"><strong>GRADING SYSTEM:</strong> ${cols[gradingSystemIndex] || '-'}</p>
