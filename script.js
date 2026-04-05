@@ -73,8 +73,7 @@ async function fillReportCard(form, examNo, password) {
   for (let row of data.slice(2)) {
     const cols = row;
     
-    // FIX 1: Adjusted length check to allow data ending at Column BO (67 columns)
-    // Changed from 68 to 50 to ensure valid rows are not skipped.
+    // Adjusted length check to allow data ending at Column BO (67 columns)
     if (cols.length < 50) continue;
     
     // CHANGED: Checks Column A (Index 0) for Exam No AND Column O (Index 14) for Password
@@ -101,6 +100,9 @@ async function fillReportCard(form, examNo, password) {
       
       const subjects = ['AGRI', 'BIBLE', 'BIO', 'CHE', 'CHI', 'HFC', 'ENG', 'HIS', 'GEO', 'S/LF', 'MAT', 'PHY', 'COM'];
       const schoolName = form.includes('ODL') ? 'MCHINJI SECONDARY SCHOOL ODL' : 'MCHINJI SECONDARY SCHOOL';
+      
+      // UPDATE: Check if ODL to change Headteacher to Coordinator
+      const roleLabel = form.includes('ODL') ? 'COORDINATOR' : 'HEADTEACHER';
       
       let html = `
         <h2 style="text-align:center; font-size: 16px;">Your examination results</h2>
@@ -133,7 +135,7 @@ async function fillReportCard(form, examNo, password) {
                 <th style="padding: 4px 2px;">REMARKS</th>
               </tr>
               ${subjects.map((subject, i) => {
-                // FIX 2: Updated baseIndex to 15 to start reading from Column P (Index 15)
+                // Fixed baseIndex to 15 to start reading from Column P (Index 15)
                 const baseIndex = 15 + (i * 4);
                 return `
                   <tr>
@@ -148,10 +150,11 @@ async function fillReportCard(form, examNo, password) {
             </table>
           </div>
           
+          <!-- UPDATED SECTION: Reordered items and dynamic label for ODL -->
           <div style="text-align: left; font-size: 12px; margin-top: 10px;">
-            <p style="margin: 2px 0;"><strong>UNIFORM:</strong> ${cols[uniformIndex] || '-'}</p>
             <p style="margin: 2px 0;"><strong>GRADING SYSTEM:</strong> ${cols[gradingSystemIndex] || '-'}</p>
-            <p style="margin: 2px 0;"><strong>HEADTEACHER:</strong> ${cols[headTeacherIndex] || '-'}</p>
+            <p style="margin: 2px 0;"><strong>${roleLabel}:</strong> ${cols[headTeacherIndex] || '-'}</p>
+            <p style="margin: 2px 0;"><strong>UNIFORM:</strong> ${cols[uniformIndex] || '-'}</p>
             <p style="margin: 2px 0;"><strong>BANK DETAILS:</strong> ${cols[bankDetailsIndex] || '-'}</p>
             <p style="margin: 2px 0;"><strong>NEXT TERM OPENS:</strong> ${cols[nextTermIndex] || '-'}</p>
           </div>
