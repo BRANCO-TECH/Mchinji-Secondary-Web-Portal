@@ -73,23 +73,23 @@ async function fillReportCard(form, examNo, password) {
   for (let row of data.slice(2)) {
     const cols = row;
     
-    // Adjusted length check to allow data ending at Column BO (67 columns)
     if (cols.length < 50) continue;
     
-    // CHANGED: Checks Column A (Index 0) for Exam No AND Column O (Index 14) for Password
-    if (cols[0]?.trim() === examNo.trim() && cols[14]?.trim() === password.trim()) {
-      const nameIndex = 2; // Column C
-      const formIndex = 3; // Column D
-      const termIndex = 4; // Column E
-      const yearIndex = 5; // Column F
-      const positionIndex = 6; // Column G
-      const bmIndex = 7; // Column H (Aggregate Grade)
-      const remarksIndex = 8; // Column I
-      const gradingSystemIndex = 9; // Column J
-      const headTeacherIndex = 10; // Column K
-      const uniformIndex = 11; // Column L
-      const bankDetailsIndex = 12; // Column M
-      const nextTermIndex = 13; // Column N
+    // FIX 1: CASE INSENSITIVE CHECK
+    // Converts both the CSV value and User Input to lowercase for comparison
+    if (cols[0]?.trim().toLowerCase() === examNo.trim().toLowerCase() && cols[14]?.trim() === password.trim()) {
+      const nameIndex = 2; 
+      const formIndex = 3; 
+      const termIndex = 4; 
+      const yearIndex = 5; 
+      const positionIndex = 6; 
+      const bmIndex = 7; 
+      const remarksIndex = 8; 
+      const gradingSystemIndex = 9; 
+      const headTeacherIndex = 10; 
+      const uniformIndex = 11; 
+      const bankDetailsIndex = 12; 
+      const nextTermIndex = 13; 
       
       let aggregateLabel = '';
       if (form.includes('Form1') || form.includes('Form2')) {
@@ -100,8 +100,6 @@ async function fillReportCard(form, examNo, password) {
       
       const subjects = ['AGRI', 'BIBLE', 'BIO', 'CHE', 'CHI', 'HEC', 'ENG', 'HIS', 'GEO', 'S/LF', 'MAT', 'PHY', 'COM'];
       const schoolName = form.includes('ODL') ? 'MCHINJI SECONDARY SCHOOL ODL' : 'MCHINJI SECONDARY SCHOOL';
-      
-      // Check if ODL to change Headteacher to Coordinator
       const roleLabel = form.includes('ODL') ? 'COORDINATOR' : 'HEADTEACHER';
       
       let html = `
@@ -113,45 +111,46 @@ async function fillReportCard(form, examNo, password) {
             <p style="margin: 2px 0; font-size: 13px;"><strong>${schoolName}</strong></p>
           </div>
           
-          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; text-align: left; font-size: 12px;">
-            <div style="flex: 1; padding-right: 5px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; text-align: left; font-size: 12px; flex-wrap: wrap;">
+            <div style="flex: 1; padding-right: 5px; min-width: 200px;">
               <p style="margin: 1px 0;"><strong>Name:</strong> ${cols[nameIndex] || '-'}</p>
               <p style="margin: 1px 0;"><strong>Form:</strong> ${cols[formIndex]} <strong>Term:</strong> ${cols[termIndex]} <strong>Year:</strong> ${cols[yearIndex]}</p>
             </div>
-            <div style="flex: 1; text-align: right; padding-left: 5px;">
+            <div style="flex: 1; text-align: right; padding-left: 5px; min-width: 200px;">
               <p style="margin: 1px 0;"><strong>Position In Class:</strong> ${cols[positionIndex] || '-'}</p>
               <p style="margin: 1px 0;"><strong>${aggregateLabel}:</strong> ${cols[bmIndex] || '-'}</p>
               <p style="margin: 1px 0;"><strong>Remarks:</strong> ${cols[remarksIndex] || '-'}</p>
             </div>
           </div>
 
-          <div style="overflow-x: hidden; width: 100%;">
-            <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11px;">
+          <!-- FIX 2: CHANGED overflow-x TO auto FOR SCROLLING ON PHONES -->
+          <div style="overflow-x: auto; width: 100%;">
+            <!-- FIX 2: REDUCED FONT TO 10px, ADDED word-break, SET COLUMN WIDTHS -->
+            <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10px;">
               <tr>
-                <th style="padding: 4px 2px;">SUBJECT</th>
-                <th style="padding: 4px 2px;">AGGREGATE (%)</th>
-                <th style="padding: 4px 2px;">GRADE</th>
-                <th style="padding: 4px 2px;">POSITION</th>
-                <th style="padding: 4px 2px;">REMARKS</th>
+                <th style="padding: 4px 2px; width: 30%;">SUBJECT</th>
+                <th style="padding: 4px 2px; width: 25%;">AGGREGATE (%)</th>
+                <th style="padding: 4px 2px; width: 15%;">GRADE</th>
+                <th style="padding: 4px 2px; width: 15%;">POSITION</th>
+                <th style="padding: 4px 2px; width: 15%;">REMARKS</th>
               </tr>
               ${subjects.map((subject, i) => {
-                // Fixed baseIndex to 15 to start reading from Column P (Index 15)
                 const baseIndex = 15 + (i * 4);
                 return `
                   <tr>
-                    <td style="padding: 3px 2px; text-align: left; padding-left: 4px;">${subject}</td>
-                    <td style="padding: 3px 2px;">${cols[baseIndex] || '-'}</td>
-                    <td style="padding: 3px 2px;">${cols[baseIndex + 1] || '-'}</td>
-                    <td style="padding: 3px 2px;">${cols[baseIndex + 2] || '-'}</td>
-                    <td style="padding: 3px 2px;">${cols[baseIndex + 3] || '-'}</td>
+                    <!-- FIX 2: ADDED word-break: break-word TO PREVENT OVERFLOW -->
+                    <td style="padding: 3px 2px; text-align: left; padding-left: 4px; word-break: break-word;">${subject}</td>
+                    <td style="padding: 3px 2px; word-break: break-word;">${cols[baseIndex] || '-'}</td>
+                    <td style="padding: 3px 2px; word-break: break-word;">${cols[baseIndex + 1] || '-'}</td>
+                    <td style="padding: 3px 2px; word-break: break-word;">${cols[baseIndex + 2] || '-'}</td>
+                    <td style="padding: 3px 2px; word-break: break-word;">${cols[baseIndex + 3] || '-'}</td>
                   </tr>
                 `;
               }).join('')}
             </table>
           </div>
           
-          <!-- Reordered items and dynamic label for ODL -->
-          <div style="text-align: left; font-size: 12px; margin-top: 10px;">
+          <div style="text-align: left; font-size: 11px; margin-top: 10px; word-wrap: break-word;">
             <p style="margin: 2px 0;"><strong>GRADING SYSTEM:</strong> ${cols[gradingSystemIndex] || '-'}</p>
             <p style="margin: 2px 0;"><strong>${roleLabel}:</strong> ${cols[headTeacherIndex] || '-'}</p>
             <p style="margin: 2px 0;"><strong>UNIFORM:</strong> ${cols[uniformIndex] || '-'}</p>
@@ -169,12 +168,11 @@ async function fillReportCard(form, examNo, password) {
       document.getElementById('downloadBtn').addEventListener('click', () => {
         const element = document.querySelector('.report-card-inner');
         
-        // UPDATED: Configuration to make PDF larger and sharper on one page
         const opt = {
-          margin:       [10, 10, 10, 10], // Top, Left, Bottom, Right (in mm). Smaller margins = more room.
+          margin:       [10, 10, 10, 10],
           filename:     'report_card.pdf',
           image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2, useCORS: true }, // Scale 2 makes text/elements larger and clearer
+          html2canvas:  { scale: 2, useCORS: true },
           jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
         
