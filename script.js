@@ -75,7 +75,7 @@ async function fillReportCard(form, examNo, password) {
     
     if (cols.length < 50) continue;
     
-    // FIX 1: CASE INSENSITIVE CHECK (Exam No)
+    // CASE INSENSITIVE CHECK
     if (cols[0]?.trim().toLowerCase() === examNo.trim().toLowerCase() && cols[14]?.trim() === password.trim()) {
       const nameIndex = 2; 
       const formIndex = 3; 
@@ -122,22 +122,20 @@ async function fillReportCard(form, examNo, password) {
             </div>
           </div>
 
-          <!-- FIX 2: OPTIMIZED TABLE FOR MOBILE -->
           <div style="overflow-x: auto; width: 100%;">
             <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10px;">
               <tr>
-                <!-- Adjusted widths to prioritize Subject and Remarks -->
-                <th style="padding: 4px 2px; width: 25%; word-wrap: break-word;">SUBJECT</th>
-                <th style="padding: 4px 2px; width: 20%; word-wrap: break-word;">AGGREGATE (%)</th>
-                <th style="padding: 4px 2px; width: 15%; word-wrap: break-word;">GRADE</th>
-                <th style="padding: 4px 2px; width: 15%; word-wrap: break-word;">POSITION</th>
-                <th style="padding: 4px 2px; width: 25%; word-wrap: break-word;">REMARKS</th>
+                <!-- UPDATED: Added font-size: 9px to headers -->
+                <th style="padding: 4px 2px; width: 25%; word-wrap: break-word; font-size: 9px;">SUBJECT</th>
+                <th style="padding: 4px 2px; width: 20%; word-wrap: break-word; font-size: 9px;">AGGREGATE (%)</th>
+                <th style="padding: 4px 2px; width: 15%; word-wrap: break-word; font-size: 9px;">GRADE</th>
+                <th style="padding: 4px 2px; width: 15%; word-wrap: break-word; font-size: 9px;">POSITION</th>
+                <th style="padding: 4px 2px; width: 25%; word-wrap: break-word; font-size: 9px;">REMARKS</th>
               </tr>
               ${subjects.map((subject, i) => {
                 const baseIndex = 15 + (i * 4);
                 return `
                   <tr>
-                    <!-- FIX 3: FORCED TEXT WRAPPING AND REDUCED PADDING -->
                     <td style="padding: 2px 1px; text-align: left; padding-left: 4px; word-wrap: break-word; overflow-wrap: break-word; white-space: normal;">${subject}</td>
                     <td style="padding: 2px 1px; word-wrap: break-word; overflow-wrap: break-word; white-space: normal;">${cols[baseIndex] || '-'}</td>
                     <td style="padding: 2px 1px; word-wrap: break-word; overflow-wrap: break-word; white-space: normal;">${cols[baseIndex + 1] || '-'}</td>
