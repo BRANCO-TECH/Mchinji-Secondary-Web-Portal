@@ -125,12 +125,12 @@ async function fillReportCard(form, examNo, password) {
           <div style="overflow-x: auto; width: 100%;">
             <table border="1" style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10px;">
               <tr>
-                <!-- UPDATED: Added font-size: 9px to headers -->
-                <th style="padding: 4px 2px; width: 25%; word-wrap: break-word; font-size: 9px;">SUBJECT</th>
-                <th style="padding: 4px 2px; width: 20%; word-wrap: break-word; font-size: 9px;">AGGREGATE (%)</th>
-                <th style="padding: 4px 2px; width: 15%; word-wrap: break-word; font-size: 9px;">GRADE</th>
-                <th style="padding: 4px 2px; width: 15%; word-wrap: break-word; font-size: 9px;">POSITION</th>
-                <th style="padding: 4px 2px; width: 25%; word-wrap: break-word; font-size: 9px;">REMARKS</th>
+                <!-- UPDATED: Added text-align: left to all headers -->
+                <th style="padding: 4px 2px; width: 25%; word-wrap: break-word; font-size: 9px; text-align: left;">SUBJECT</th>
+                <th style="padding: 4px 2px; width: 20%; word-wrap: break-word; font-size: 9px; text-align: left;">AGGREGATE (%)</th>
+                <th style="padding: 4px 2px; width: 15%; word-wrap: break-word; font-size: 9px; text-align: left;">GRADE</th>
+                <th style="padding: 4px 2px; width: 15%; word-wrap: break-word; font-size: 9px; text-align: left;">POSITION</th>
+                <th style="padding: 4px 2px; width: 25%; word-wrap: break-word; font-size: 9px; text-align: left;">REMARKS</th>
               </tr>
               ${subjects.map((subject, i) => {
                 const baseIndex = 15 + (i * 4);
